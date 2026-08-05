@@ -1,129 +1,189 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function HomePage() {
-  const [matchIdx, setMatchIdx] = useState(0);
-
-  const matches = [
-    {
-      round: 'WINNERS FINAL',
-      teams: [
-        { seed: '1', name: 'Nova Fracture', score: 2, active: true },
-        { seed: '5', name: 'Iron Wake', score: 1, active: false },
-      ]
-    },
-    {
-      round: 'LOSERS SEMI',
-      teams: [
-        { seed: '3', name: 'Cloud Surge', score: 0, active: false },
-        { seed: '2', name: 'Neon Knights', score: 2, active: true },
-      ]
-    },
-    {
-      round: 'GRAND FINAL',
-      teams: [
-        { seed: '1', name: 'Nova Fracture', score: 1, active: true },
-        { seed: '2', name: 'Neon Knights', score: 0, active: false },
-      ]
-    }
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMatchIdx((prev) => (prev + 1) % matches.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [matches.length]);
-
-  const currentMatch = matches[matchIdx];
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
-    <div>
-      <section className="relative overflow-hidden border-b border-ink-700/60 bg-grid-fade">
-        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-2 md:items-center md:py-28">
-          <div className="animate-fade-up">
-            <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-signal-teal">
-              Round 1 · Match 04 · Live
-            </p>
-            <h1 className="font-display text-4xl font-semibold leading-tight tracking-tight text-mist-100 md:text-5xl">
-              Run tournaments people actually want to play in.
-            </h1>
-            <p className="mt-5 max-w-md text-mist-400">
-              Open registration, seed the bracket, and report results in real time —
-              built for esports organizers who don't want to run brackets in a spreadsheet.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/tournaments"
-                className="focus-ring rounded-md bg-signal-violet px-5 py-3 text-sm font-medium text-ink-950 hover:bg-signal-violet/90 transition-colors shadow-lg shadow-signal-violet/20"
-              >
-                Browse tournaments
-              </Link>
-              <Link
-                href="/register"
-                className="focus-ring rounded-md border border-ink-600 px-5 py-3 text-sm font-medium text-mist-200 hover:border-signal-violet hover:text-mist-100 transition-all hover:bg-signal-violet/5"
-              >
-                Create an account
-              </Link>
-            </div>
+    <div className="bg-ink-950 min-h-screen selection:bg-signal-violet/30 selection:text-white">
+      
+      {/* Dynamic Background Elements */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-signal-violet/20 blur-[150px] rounded-full animate-float mix-blend-screen" />
+        <div className="absolute top-[20%] right-[-10%] w-[30%] h-[30%] bg-signal-teal/10 blur-[120px] rounded-full animate-float-delayed mix-blend-screen" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[40%] bg-signal-amber/10 blur-[150px] rounded-full animate-float mix-blend-screen" />
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-5 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-grid-fade" />
+      </div>
+
+      {/* Hero Section */}
+      <section className="relative z-10 pt-32 pb-20 md:pt-48 md:pb-32 px-6 flex items-center justify-center min-h-[90vh]">
+        <div className="text-center max-w-5xl mx-auto animate-slideUp">
+          
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors cursor-default">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal-teal opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-signal-teal"></span>
+            </span>
+            <span className="text-xs font-bold uppercase tracking-widest text-mist-200">Over 500+ Daily Matches</span>
           </div>
 
-          <div className="animate-fade-up animation-delay-200 animate-float">
-            <div className="mx-auto w-full max-w-sm rounded-lg border border-signal-violet/30 bg-ink-900/80 p-5 shadow-2xl animate-glow-pulse backdrop-blur-sm">
-              <div className="mb-4 flex items-center justify-between text-xs text-mist-400 transition-all">
-                <span className="font-mono transition-opacity duration-500">BO3 · {currentMatch.round}</span>
-                <span className="flex items-center gap-1.5 text-signal-teal">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal-teal" /> LIVE
-                </span>
-              </div>
-              <div className="space-y-3 relative h-[120px]">
-                {currentMatch.teams.map((t, index) => (
-                  <div
-                    key={`${t.name}-${matchIdx}`}
-                    className={`absolute w-full flex items-center justify-between rounded-md border px-4 py-3 transition-all duration-700 ease-in-out ${
-                      t.active ? 'border-signal-violet/50 bg-signal-violet/10 shadow-inner' : 'border-ink-700 bg-ink-800/60'
-                    }`}
-                    style={{ top: index === 0 ? '0' : '64px', animation: 'fade-up 0.5s ease-out forwards' }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs text-mist-400">#{t.seed}</span>
-                      <span className="text-sm font-medium text-mist-100">{t.name}</span>
-                    </div>
-                    <span className="font-mono text-lg font-semibold text-mist-100">{t.score}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 text-xs text-mist-400 text-center italic transition-opacity">Simulated live feed</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="grid gap-8 md:grid-cols-3">
-          {[
-            { label: 'Open registration', body: 'Set an entry fee, a cap on teams, and a registration window — the platform handles the rest.' },
-            { label: 'Seeded brackets', body: 'Single-elimination brackets are generated automatically once registration closes, with byes handled for you.' },
-            { label: 'Live results', body: 'Organizers report scores match by match; winners advance instantly and the bracket updates live.' },
-          ].map((f, i) => (
-            <div 
-              key={f.label} 
-              className={`animate-fade-up rounded-lg border border-ink-700 bg-ink-900/40 p-6 hover:border-signal-violet/50 hover:bg-ink-900/80 transition-all cursor-default shadow-lg hover:-translate-y-1 ${
-                i === 0 ? 'animation-delay-200' : i === 1 ? 'animation-delay-400' : 'animation-delay-600'
-              }`}
-              style={{ animationDelay: `${(i + 1) * 150}ms` }}
+          <h1 className="font-display text-6xl md:text-8xl font-black leading-tight tracking-tighter text-white mb-6 drop-shadow-2xl">
+            Play.<br className="md:hidden" /> Compete.<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-signal-violet via-signal-teal to-signal-violet bg-[length:200%_auto] animate-pulseGlow">
+              Dominate.
+            </span>
+          </h1>
+          
+          <p className="mx-auto max-w-2xl text-lg md:text-2xl text-mist-200 font-medium leading-relaxed mb-10">
+            The premium esports platform for competitive players. Enter daily tournaments, climb the leaderboards, and win real cash prizes.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Link
+              href="/register"
+              className="group relative w-full sm:w-auto overflow-hidden rounded-xl bg-signal-violet px-10 py-5 text-sm font-bold uppercase tracking-[0.2em] text-white transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(178,133,240,0.6)] active:scale-95"
             >
-              <h3 className="font-display text-base font-semibold text-mist-100 flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-signal-violet opacity-70"></span>
-                {f.label}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-mist-400">{f.body}</p>
-            </div>
-          ))}
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+              <span className="relative drop-shadow-md">Start Playing Free</span>
+            </Link>
+            <Link
+              href="/tournaments"
+              className="w-full sm:w-auto rounded-xl border border-ink-600 bg-ink-900/40 backdrop-blur-md px-10 py-5 text-sm font-bold uppercase tracking-[0.2em] text-mist-100 transition-all hover:bg-ink-800 hover:border-signal-teal hover:text-white hover:shadow-[0_0_20px_rgba(70,225,184,0.2)] active:scale-95"
+            >
+              Explore Tournaments
+            </Link>
+          </div>
         </div>
       </section>
+
+      {/* Premium Stats Strip */}
+      <section className="relative z-10 border-y border-ink-800 bg-ink-900/50 backdrop-blur-xl py-12">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <StatBox number="₹2.5M+" label="Paid Out Monthly" />
+          <StatBox number="150K" label="Active Gamers" />
+          <StatBox number="12,000+" label="Tournaments Hosted" />
+          <StatBox number="< 5min" label="Payout Time" />
+        </div>
+      </section>
+
+      {/* Feature Showcase */}
+      <section className="relative z-10 py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24 animate-slideUp" style={{ animationDelay: '200ms' }}>
+            <h2 className="font-display text-4xl md:text-6xl font-black text-white mb-6">Built for <span className="text-signal-teal">Champions</span></h2>
+            <p className="text-xl text-mist-400 font-medium max-w-2xl mx-auto">Everything you need to compete at the highest level, engineered into one beautiful platform.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <FeatureCard 
+              icon="🏆"
+              title="Automated Brackets"
+              description="No more waiting around. Our system automatically generates seeded brackets the second registration closes."
+              delay="300ms"
+            />
+            <FeatureCard 
+              icon="⚡"
+              title="Instant Payouts"
+              description="Win your match, get paid. Winnings are automatically credited to your wallet for instant withdrawal via UPI."
+              delay="400ms"
+              featured={true}
+            />
+            <FeatureCard 
+              icon="🛡️"
+              title="Anti-Cheat & Dispute"
+              description="Fair play is guaranteed. Dedicated admins and automated screenshot verification keep the competition clean."
+              delay="500ms"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works / Steps */}
+      <section className="relative z-10 py-24 bg-ink-900/30 border-y border-ink-800/50 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="font-display text-3xl md:text-5xl font-bold text-center text-white mb-20">Your Path to <span className="text-signal-violet">Victory</span></h2>
+          
+          <div className="grid md:grid-cols-4 gap-8 relative">
+            <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-signal-violet/0 via-signal-violet/50 to-signal-violet/0" />
+            
+            <Step number="01" title="Register" desc="Create your free account and link your game IDs." />
+            <Step number="02" title="Join" desc="Find a tournament that matches your skill level and schedule." />
+            <Step number="03" title="Compete" desc="Play your matches and report scores directly on the platform." />
+            <Step number="04" title="Earn" desc="Win your bracket and withdraw your cash instantly." />
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="relative z-10 py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-signal-violet/10 to-transparent pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center rounded-3xl bg-ink-800/40 border border-ink-700/50 p-12 md:p-20 backdrop-blur-xl shadow-2xl relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-br from-signal-violet/20 to-signal-teal/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          
+          <h2 className="relative font-display text-4xl md:text-5xl font-black text-white mb-6">Ready to drop in?</h2>
+          <p className="relative text-lg text-mist-200 mb-10 max-w-xl mx-auto">Join the fastest-growing esports community today. Thousands of players are waiting.</p>
+          
+          <Link
+            href="/register"
+            className="relative inline-block overflow-hidden rounded-xl bg-white px-12 py-5 text-sm font-bold uppercase tracking-[0.2em] text-ink-950 transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+          >
+            Create Free Account
+          </Link>
+        </div>
+      </section>
+
+    </div>
+  );
+}
+
+function StatBox({ number, label }) {
+  return (
+    <div className="text-center group">
+      <p className="font-display text-4xl md:text-5xl font-black text-white drop-shadow-lg mb-2 group-hover:text-signal-teal transition-colors duration-300">{number}</p>
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-mist-400">{label}</p>
+    </div>
+  );
+}
+
+function FeatureCard({ icon, title, description, delay, featured }) {
+  return (
+    <div 
+      className={`relative group rounded-3xl border p-10 transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] animate-slideUp
+        ${featured 
+          ? 'bg-gradient-to-b from-ink-800 to-ink-900 border-signal-violet/50 hover:border-signal-violet shadow-[0_0_30px_rgba(178,133,240,0.15)]' 
+          : 'bg-ink-900/60 border-ink-700/60 hover:border-mist-400 hover:bg-ink-800/80 backdrop-blur-xl'
+        }`}
+      style={{ animationDelay: delay, animationFillMode: 'both' }}
+    >
+      {featured && <div className="absolute -top-px left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-signal-violet to-transparent" />}
+      
+      <div className={`mb-8 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl shadow-inner transition-colors duration-500
+        ${featured ? 'bg-signal-violet/20 border-2 border-signal-violet/50' : 'bg-ink-800 border border-ink-600 group-hover:border-signal-teal/50 group-hover:bg-signal-teal/10'}
+      `}>
+        {icon}
+      </div>
+      <h3 className="font-display text-2xl font-bold text-white mb-4">
+        {title}
+      </h3>
+      <p className="text-mist-400 leading-relaxed font-medium">
+        {description}
+      </p>
+    </div>
+  );
+}
+
+function Step({ number, title, desc }) {
+  return (
+    <div className="relative text-center z-10 group">
+      <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-ink-950 border-4 border-ink-800 mb-6 group-hover:border-signal-violet group-hover:scale-110 transition-all duration-500 shadow-xl">
+        <span className="font-display text-3xl font-black text-mist-400 group-hover:text-white transition-colors">{number}</span>
+      </div>
+      <h4 className="font-display text-xl font-bold text-white mb-3">{title}</h4>
+      <p className="text-sm text-mist-400 font-medium px-4">{desc}</p>
     </div>
   );
 }

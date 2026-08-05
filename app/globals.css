@@ -4,23 +4,105 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-:root {
+:root, :root[data-theme='gamercraft'] {
   color-scheme: dark;
+  --color-ink-950: #0B0E14;
+  --color-ink-900: #12161F;
+  --color-ink-800: #171C28;
+  --color-ink-700: #232939;
+  --color-ink-600: #323A4E;
+  --color-mist-400: #7C8496;
+  --color-mist-200: #C4C9D4;
+  --color-mist-100: #E7E9EE;
+  --color-signal-violet: #B285F0;
+  --color-signal-teal: #46E1B8;
+  --color-signal-amber: #F0B84E;
+  --color-signal-red: #F0596B;
+  --color-signal-lime: #D4FF00;
+}
+
+:root[data-theme='cyberpunk'] {
+  color-scheme: dark;
+  --color-ink-950: #090916;
+  --color-ink-900: #111126;
+  --color-ink-800: #1E1E40;
+  --color-ink-700: #2B2B5C;
+  --color-ink-600: #3D3D80;
+  --color-mist-400: #8E8EA6;
+  --color-mist-200: #C7C7D9;
+  --color-mist-100: #EAEAFF;
+  --color-signal-violet: #FF2A85; /* Hot Pink */
+  --color-signal-teal: #00FFEA;   /* Cyan */
+  --color-signal-amber: #FFD700;
+  --color-signal-red: #FF3333;
+  --color-signal-lime: #E5FF00;   /* Neon Yellow */
+}
+
+:root[data-theme='crimson'] {
+  color-scheme: dark;
+  --color-ink-950: #120A0A;
+  --color-ink-900: #1C0F0F;
+  --color-ink-800: #2A1717;
+  --color-ink-700: #3D2222;
+  --color-ink-600: #522E2E;
+  --color-mist-400: #9E8585;
+  --color-mist-200: #D6C2C2;
+  --color-mist-100: #F2E6E6;
+  --color-signal-violet: #FF4D4D; /* Blood Red */
+  --color-signal-teal: #FF9933;   /* Flame Orange */
+  --color-signal-amber: #FFC000;
+  --color-signal-red: #E60000;
+  --color-signal-lime: #FF3333;
+}
+
+:root[data-theme='ocean'] {
+  color-scheme: dark;
+  --color-ink-950: #05131A;
+  --color-ink-900: #0A1D29;
+  --color-ink-800: #132D40;
+  --color-ink-700: #1C425E;
+  --color-ink-600: #275980;
+  --color-mist-400: #7A9FB8;
+  --color-mist-200: #B8D6EB;
+  --color-mist-100: #E6F2FA;
+  --color-signal-violet: #00E5FF; /* Aqua */
+  --color-signal-teal: #00FFB2;   /* Seafoam */
+  --color-signal-amber: #FFB74D;
+  --color-signal-red: #FF5252;
+  --color-signal-lime: #00E676;
+}
+
+:root[data-theme='midnight'] {
+  color-scheme: dark;
+  --color-ink-950: #0D0514;
+  --color-ink-900: #160824;
+  --color-ink-800: #260E40;
+  --color-ink-700: #3A155E;
+  --color-ink-600: #521E80;
+  --color-mist-400: #9375A8;
+  --color-mist-200: #D0BDE0;
+  --color-mist-100: #EEE8F2;
+  --color-signal-violet: #D400FF; /* Synth Magenta */
+  --color-signal-teal: #0088FF;   /* Electric Blue */
+  --color-signal-amber: #FF9100;
+  --color-signal-red: #FF1744;
+  --color-signal-lime: #00E5FF;
 }
 
 body {
-  background-color: #0B0E14;
-  color: #E7E9EE;
+  background-color: var(--color-ink-950);
+  color: var(--color-mist-100);
   font-family: 'Inter', sans-serif;
   background-image:
-    radial-gradient(circle at 20% 0%, rgba(178,133,240,0.10), transparent 40%),
-    radial-gradient(circle at 80% 10%, rgba(70,225,184,0.06), transparent 35%);
+    radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--color-signal-violet) 10%, transparent), transparent 40%),
+    radial-gradient(circle at 80% 10%, color-mix(in srgb, var(--color-signal-teal) 6%, transparent), transparent 35%);
   background-attachment: fixed;
+  transition: background-color 0.5s ease;
 }
 
 ::selection {
-  background: #B285F0;
-  color: #0B0E14;
+  background: var(--color-signal-violet);
+  color: var(--color-ink-950);
 }
 
 .focus-ring:focus-visible {

@@ -6,48 +6,38 @@ import Link from 'next/link';
 export default function DashboardPage() {
   const { user, loading } = useAuth();
 
-  if (loading) return null;
-  if (!user) {
-    return (
-      <div className="mx-auto max-w-lg px-6 py-20 text-center">
-        <h1 className="font-display text-xl font-semibold text-mist-100">Sign in required</h1>
-        <p className="mt-2 text-sm text-mist-400">
-          <Link href="/login" className="text-signal-violet hover:underline">Sign in</Link> to view your dashboard.
-        </p>
-      </div>
-    );
-  }
+  if (loading || !user) return null;
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12">
-      <h1 className="font-display text-2xl font-semibold text-mist-100">Welcome back, {user.username}</h1>
-      <p className="mt-1 text-sm text-mist-400">Role: <span className="capitalize text-mist-200">{user.role}</span></p>
-
-      <div className="mt-8 grid gap-5 sm:grid-cols-3">
-        <StatCard label="Tournaments played" value={user.stats?.tournamentsPlayed ?? 0} />
-        <StatCard label="Wins" value={user.stats?.wins ?? 0} />
-        <StatCard label="Win rate" value={user.stats?.tournamentsPlayed ? `${Math.round((user.stats.wins / user.stats.tournamentsPlayed) * 100)}%` : '—'} />
+    <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="mb-8">
+        <h1 className="font-display text-3xl font-semibold text-mist-100 mb-2">Welcome back, {user.username}</h1>
+        <p className="text-sm text-mist-400">Role: <span className="capitalize text-signal-teal font-medium tracking-wide">{user.role}</span></p>
       </div>
 
-      <div className="mt-10 flex flex-wrap gap-3">
-        <Link href="/tournaments" className="focus-ring rounded-md border border-ink-600 px-4 py-2 text-sm text-mist-200 hover:border-signal-violet hover:text-mist-100">
-          Browse tournaments
+      <div className="mb-10 grid gap-6 sm:grid-cols-3">
+        <StatCard label="Tournaments played" value={user.stats?.tournamentsPlayed ?? 0} icon="🎮" />
+        <StatCard label="Matches won" value={user.stats?.wins ?? 0} icon="🏆" />
+        <StatCard label="Win rate" value={user.stats?.tournamentsPlayed ? `${Math.round((user.stats.wins / user.stats.tournamentsPlayed) * 100)}%` : '—'} icon="📈" />
+      </div>
+
+      <div className="mt-10 flex flex-wrap gap-4 justify-center">
+        <Link href="/tournaments" className="focus-ring inline-flex items-center justify-center gap-2 rounded-md bg-signal-violet px-5 py-2.5 text-sm font-bold text-ink-950 transition-all hover:bg-signal-violet/90 shadow-[0_0_15px_rgba(113,84,255,0.2)]">
+          <span>🎮</span> Browse Tournaments
         </Link>
-        {user.role === 'superadmin' && (
-          <Link href="/tournaments/new" className="focus-ring rounded-md bg-signal-violet px-4 py-2 text-sm font-medium text-ink-950 hover:opacity-90">
-            Create tournament
-          </Link>
-        )}
       </div>
     </div>
   );
 }
 
-function StatCard({ label, value }) {
+function StatCard({ label, value, icon }) {
   return (
-    <div className="rounded-lg border border-ink-700 bg-ink-900/50 p-5">
-      <p className="font-mono text-2xl font-semibold text-mist-100">{value}</p>
-      <p className="mt-1 text-xs text-mist-400">{label}</p>
+    <div className="rounded-xl border border-ink-700 bg-ink-900/60 p-8 shadow-xl">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-2xl">{icon}</span>
+      </div>
+      <p className="font-mono text-4xl font-black tracking-tight text-mist-100 mb-2">{value}</p>
+      <p className="text-sm font-bold uppercase tracking-widest text-mist-400">{label}</p>
     </div>
   );
 }
