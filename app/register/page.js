@@ -18,7 +18,7 @@ export default function RegisterPage() {
     setSubmitting(true);
     try {
       await register(form.username, form.email, form.password);
-      router.push('/dashboard');
+      router.push('/tournaments');
     } catch (err) {
       setError(err.message);
     } finally {

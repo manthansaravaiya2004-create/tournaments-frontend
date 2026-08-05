@@ -18,7 +18,7 @@ export default function LoginPage() {
     setSubmitting(true);
     try {
       await login(form.email, form.password);
-      router.push('/dashboard');
+      router.push('/tournaments');
     } catch (err) {
       setError(err.message);
     } finally {

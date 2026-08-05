@@ -12,10 +12,8 @@ export default function LivePage() {
   useEffect(() => {
     async function fetchLiveTournaments() {
       try {
-        const { tournaments } = await api.listTournaments();
-        // Filter for tournaments that are currently in progress
-        const live = tournaments.filter(t => t.status === 'in_progress');
-        setLiveTournaments(live);
+        const { tournaments } = await api.listTournaments('?status=in_progress');
+        setLiveTournaments(tournaments);
       } catch (err) {
         setError(err.message);
       } finally {

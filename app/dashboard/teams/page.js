@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import Link from 'next/link';
+import { api } from '../../../lib/api';
 
 export default function MyTeamsPage() {
   const { user, token, loading } = useAuth();
@@ -15,14 +16,7 @@ export default function MyTeamsPage() {
 
     async function fetchMyTeams() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/teams/my-teams`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || 'Failed to fetch teams');
-        
+        const data = await api.getMyTeams(token);
         setTeams(data.teams || []);
       } catch (err) {
         setError(err.message);
