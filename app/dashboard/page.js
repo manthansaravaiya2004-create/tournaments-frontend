@@ -33,7 +33,7 @@ export default function DashboardPage() {
         <Link href="/tournaments" className="focus-ring rounded-md border border-ink-600 px-4 py-2 text-sm text-mist-200 hover:border-signal-violet hover:text-mist-100">
           Browse tournaments
         </Link>
-        {(user.role === 'organizer' || user.role === 'admin') && (
+        {user.role === 'superadmin' && (
           <Link href="/tournaments/new" className="focus-ring rounded-md bg-signal-violet px-4 py-2 text-sm font-medium text-ink-950 hover:opacity-90">
             Create tournament
           </Link>

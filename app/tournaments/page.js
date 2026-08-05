@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { api } from '../../lib/api';
 import TournamentCard from '../../components/TournamentCard';
+import CreateTournamentButton from '../../components/CreateTournamentButton';
 
 export default async function TournamentsPage() {
   let tournaments = [];
@@ -19,12 +20,7 @@ export default async function TournamentsPage() {
           <h1 className="font-display text-2xl font-semibold text-mist-100">Tournaments</h1>
           <p className="mt-1 text-sm text-mist-400">Browse open brackets and upcoming events.</p>
         </div>
-        <Link
-          href="/tournaments/new"
-          className="focus-ring rounded-md border border-ink-600 px-4 py-2 text-sm font-medium text-mist-200 hover:border-signal-violet hover:text-mist-100"
-        >
-          Create tournament
-        </Link>
+        <CreateTournamentButton />
       </div>
 
       {loadError && (

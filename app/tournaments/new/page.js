@@ -38,12 +38,12 @@ export default function NewTournamentPage() {
 
   if (loading) return null;
 
-  if (!user || (user.role !== 'organizer' && user.role !== 'admin')) {
+  if (!user || user.role !== 'superadmin') {
     return (
       <div className="mx-auto max-w-lg px-6 py-20 text-center">
-        <h1 className="font-display text-xl font-semibold text-mist-100">Organizer access required</h1>
+        <h1 className="font-display text-xl font-semibold text-mist-100">Super Admin access required</h1>
         <p className="mt-2 text-sm text-mist-400">
-          Only organizer or admin accounts can create tournaments. Update your role in the database, or sign in with an organizer account.
+          Only super admin accounts can create tournaments.
         </p>
       </div>
     );

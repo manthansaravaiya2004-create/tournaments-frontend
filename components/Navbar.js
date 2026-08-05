@@ -17,8 +17,8 @@ export default function Navbar() {
         <nav className="hidden items-center gap-6 text-sm text-mist-400 md:flex">
           <Link href="/tournaments" className="hover:text-mist-100 transition-colors">Tournaments</Link>
           {user && <Link href="/dashboard" className="hover:text-mist-100 transition-colors">Dashboard</Link>}
-          {user?.role === 'admin' && <Link href="/admin" className="hover:text-mist-100 transition-colors">Admin</Link>}
-          {(user?.role === 'organizer' || user?.role === 'admin') && (
+          {user?.role === 'superadmin' && <Link href="/admin" className="hover:text-mist-100 transition-colors text-signal-violet">Super Admin</Link>}
+          {user?.role === 'superadmin' && (
             <Link href="/tournaments/new" className="hover:text-mist-100 transition-colors">Create tournament</Link>
           )}
         </nav>
