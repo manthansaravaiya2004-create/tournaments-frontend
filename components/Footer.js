@@ -6,10 +6,10 @@ export default function Footer() {
     <footer className="border-t border-ink-700/60 bg-ink-950 pt-16 pb-8 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-signal-violet/10 blur-[120px] rounded-full pointer-events-none" />
-      
+
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          
+
           {/* Brand */}
           <div className="col-span-1 md:col-span-1 flex flex-col items-start gap-4">
             <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
@@ -36,10 +36,10 @@ export default function Footer() {
             <ul className="space-y-3 text-sm font-medium text-mist-400">
               <li><Link href="/contact" className="hover:text-signal-violet transition-colors">Contact Us</Link></li>
               <li>
-                <a 
-                  href="https://www.instagram.com/manthan.py7?igsh=YzBvNnQ2azEyeTlz" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://www.instagram.com/manthan.py7?igsh=YzBvNnQ2azEyeTlz"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-signal-violet transition-colors flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

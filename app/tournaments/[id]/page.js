@@ -83,12 +83,7 @@ export default function TournamentDetailPage() {
     setNotice('');
     setShowPayment(false);
     try {
-      let paymentScreenshotUrl = '';
-      if (screenshotFile) {
-        const uploadRes = await api.uploadImage(screenshotFile, token);
-        paymentScreenshotUrl = uploadRes.url;
-      }
-      const payload = { ...teamForm, upiUtr, refundUpiId, paymentScreenshot: paymentScreenshotUrl };
+      const payload = { ...teamForm, upiUtr, refundUpiId };
       const { team } = await api.registerTeam(id, payload, token);
       setNotice(`Team "${team.name}" registered successfully!`);
       setTeamForm({
@@ -543,14 +538,13 @@ export default function TournamentDetailPage() {
 function PaymentModal({ amount, tournamentName, teamName, onClose, onConfirm, busy }) {
   const [upiUtr, setUpiUtr] = useState('');
   const [refundUpiId, setRefundUpiId] = useState('');
-  const [screenshotFile, setScreenshotFile] = useState(null);
   const transactionNote = encodeURIComponent(`${tournamentName} - Team ${teamName}`);
   const upiUrl = `upi://pay?pa=parthchauhan417418@okaxis&pn=parth%20Chauhan&am=${amount}&tn=${transactionNote}&cu=INR`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
 
   const handleSubmit = () => {
-    if (!upiUtr || !refundUpiId || !screenshotFile) return alert('Please enter UTR, Refund UPI ID, and upload screenshot.');
-    onConfirm(upiUtr, refundUpiId, screenshotFile);
+    if (!upiUtr || !refundUpiId) return alert('Please enter UTR and Refund UPI ID.');
+    onConfirm(upiUtr, refundUpiId, null);
   };
 
   return (
@@ -560,18 +554,17 @@ function PaymentModal({ amount, tournamentName, teamName, onClose, onConfirm, bu
         <p className="mt-2 text-sm text-mist-400">Scan with Google Pay or any UPI app to pay ₹{amount}</p>
 
         <div className="my-6 flex justify-center">
-          <div className="rounded-xl border-4 border-white bg-white p-2 shadow-lg">
+          <a href={upiUrl} className="group relative rounded-xl border-4 border-white bg-white p-2 shadow-lg hover:scale-105 transition-transform block cursor-pointer">
             <img src={qrUrl} alt="Google Pay QR Code" className="h-48 w-48 object-contain" />
-          </div>
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center backdrop-blur-[2px]">
+              <span className="text-white font-bold text-sm bg-black/60 px-3 py-1.5 rounded-full">Tap to Pay</span>
+            </div>
+          </a>
         </div>
 
         <div className="space-y-3 mb-6 text-left">
           <input required placeholder="UPI UTR / Transaction ID" value={upiUtr} onChange={(e) => setUpiUtr(e.target.value)} className="focus-ring w-full rounded-md border border-ink-600 bg-ink-900 px-3 py-2 text-sm text-mist-100" />
           <input required placeholder="Your UPI ID (For Refunds)" value={refundUpiId} onChange={(e) => setRefundUpiId(e.target.value)} className="focus-ring w-full rounded-md border border-ink-600 bg-ink-900 px-3 py-2 text-sm text-mist-100" />
-          <div>
-            <label className="block text-xs font-medium text-mist-400 mb-1">Upload Payment Screenshot</label>
-            <input type="file" accept="image/*" onChange={(e) => setScreenshotFile(e.target.files[0])} className="w-full text-sm text-mist-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-signal-violet file:text-ink-950 hover:file:opacity-90" />
-          </div>
         </div>
 
         <button onClick={handleSubmit} disabled={busy} className="focus-ring w-full rounded-md bg-signal-teal py-3 text-sm font-medium text-ink-950 hover:bg-signal-teal/90 transition-colors shadow-lg shadow-signal-teal/20 disabled:opacity-50">
