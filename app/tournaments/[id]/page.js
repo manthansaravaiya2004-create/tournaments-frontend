@@ -553,13 +553,16 @@ function PaymentModal({ amount, tournamentName, teamName, onClose, onConfirm, bu
         <h3 className="font-display text-2xl font-semibold text-mist-100">Complete Payment</h3>
         <p className="mt-2 text-sm text-mist-400">Scan with Google Pay or any UPI app to pay ₹{amount}</p>
 
-        <div className="my-6 flex justify-center">
+        <div className="my-6 flex flex-col items-center">
           <a href={upiUrl} className="group relative rounded-xl border-4 border-white bg-white p-2 shadow-lg hover:scale-105 transition-transform block cursor-pointer">
             <img src={qrUrl} alt="Google Pay QR Code" className="h-48 w-48 object-contain" />
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center backdrop-blur-[2px]">
               <span className="text-white font-bold text-sm bg-black/60 px-3 py-1.5 rounded-full">Tap to Pay</span>
             </div>
           </a>
+          <p className="mt-3 text-xs font-medium text-signal-teal animate-pulse">
+            👆 Click on QR to Pay Directly (Mobile)
+          </p>
         </div>
 
         <div className="space-y-3 mb-6 text-left">
